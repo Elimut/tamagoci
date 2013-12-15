@@ -1,0 +1,18 @@
+﻿<Window x:Class="tamagoci.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Background="#FFB1C1EA" OpacityMask="#FFC78E8E">
+        <Button x:Name="button_exit" Content="exit" HorizontalAlignment="Left" Height="27" Margin="188,283,0,0" VerticalAlignment="Top" Width="122" Click="button_exit_Click"/>
+        <Button x:Name="do_eat" Content="eat" HorizontalAlignment="Left" Height="26" Margin="392,89,0,0" VerticalAlignment="Top" Width="115" Click="do_eat_Click"/>
+        <Button x:Name="do_play" Content="play" HorizontalAlignment="Left" Height="26" Margin="392,58,0,0" VerticalAlignment="Top" Width="115" Click="do_play_Click"/>
+
+        <ProgressBar x:Name="progress_eat" HorizontalAlignment="Left" Height="26" Margin="89,89,0,0" VerticalAlignment="Top" Width="250" ValueChanged="progress_eat_ValueChanged"/>
+        <Button x:Name="do_sleep" Content="sleep" HorizontalAlignment="Left" Height="26" Margin="392,120,0,0" VerticalAlignment="Top" Width="115" Click="do_sleep_Click"/>
+        <ProgressBar x:Name="progress_sleep" HorizontalAlignment="Left" Height="26" Margin="89,120,0,0" VerticalAlignment="Top" Width="250" ValueChanged="progress_sleep_ValueChanged"/>
+        <Grid Margin="0,-2,40,42">
+            <ProgressBar x:Name="progress_play" HorizontalAlignment="Left" Height="26" Margin="89,58,0,0" VerticalAlignment="Top" Width="250" ValueChanged="progress_play_ValueChanged"/>
+            <TextBlock Text="{Binding ElementName=progress_play, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+    </Grid>
+</Window>
