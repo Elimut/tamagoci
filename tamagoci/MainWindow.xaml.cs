@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Timers;
 
+
 // http://www.wpf-tutorial.com/misc-controls/the-progressbar-control/  <--- procenta na progress baru
 
 
@@ -28,7 +29,7 @@ namespace tamagoci
         public MainWindow()
         {
             InitializeComponent();
-            this.pet = new Zviratko(this);
+            this.pet = new Zviratko(this, "zviratko");
             this.progress_play.Value = this.pet.Played;
             this.progress_eat.Value = this.pet.Eaten;
             this.progress_sleep.Value = this.pet.Slept;
@@ -74,6 +75,11 @@ namespace tamagoci
         private void do_sleep_Click(object sender, RoutedEventArgs e)
         {
             this.progress_sleep.Value += 1;
+        }
+    
+        private void save_Zviratko_Click(object sender, RoutedEventArgs e)
+        {
+            pet.save();
         }
 
     }

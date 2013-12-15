@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Threading;
+using Microsoft.Win32;//SaveFileDialog
+using System.IO;//StreamWriter
 
 namespace tamagoci
 {
@@ -20,8 +22,9 @@ namespace tamagoci
         private double played;
         private double eaten;
         private double slept;
-        public Zviratko(MainWindow mw) {
-          
+        private string name;//jmeno zviratka, pouzito i pro ulozeni do souboru
+        public Zviratko(MainWindow mw, string name) {
+            this.name = name; 
             played = 50;
             eaten = 10;
             slept = 90;
@@ -40,6 +43,20 @@ namespace tamagoci
             timer.Start();
             #endif
         }
+        //ukladani doladit na nejaky format? XML?
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("{0},{1},{2},{3}", name, Played, Eaten, Slept);
+            return sb.ToString();
+        }
+
+        //cas potrebujeme nekdy zastavit/spustit
+        public void start_stop()
+        {
+            if (timer.IsEnabled) { timer.Stop(); } else { timer.Start();  }
+        }
+
         private void OnTimedEvent(object source, /*Elapsed*/EventArgs e)
         {
             this.played -= 1;
@@ -65,7 +82,34 @@ namespace tamagoci
                }
             }
         }
+        //ukladani, viz John Sharp: Visual C# 2010, strana 475
+        public void save ()
+        {
+            //behem dialogu ukladani potrebujeme zastavit cas/timer!
+            bool timerEnabled = this.timer.IsEnabled;
+            if (timerEnabled) { this.timer.Stop(); } //pokud timer bezi, zastavime
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.DefaultExt = "txt";
+            dlg.AddExtension = true;
+            dlg.FileName = "Zviratko";
+            dlg.InitialDirectory = @"c:\Users\ela\Documents\";
+            dlg.OverwritePrompt = true;
+            dlg.Title = "Zviratko";
+            dlg.ValidateNames = true;
+            if (dlg.ShowDialog().Value)
+            {
+                using (StreamWriter writer = new StreamWriter(dlg.FileName))
+                {
+                    writer.WriteLine(this.ToString());
+                }
+                MessageBox.Show("Udaje Zviratka byly ulozeny", "Ulozeno");
+            }
+            if (timerEnabled) { this.timer.Start(); }//pokud timer bezel, zase pustime
 
+        }
+
+
+    //doplnit nejak pravidla mezi jidlem, hranim a spanim?
         public double Played
         {
             get
